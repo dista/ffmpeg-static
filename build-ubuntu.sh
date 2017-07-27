@@ -1,7 +1,10 @@
 #!/bin/bash
 
-sudo apt-get install build-essential curl tar pkg-config
-sudo apt-get -y --force-yes install \
+apt-get -y install build-essential curl tar pkg-config wget \
+  lsb-release \
+  bc
+
+apt-get -y --force-yes install \
   autoconf \
   automake \
   build-essential \
@@ -36,9 +39,9 @@ sudo apt-get -y --force-yes install \
 ubuntu_version=`lsb_release -rs`
 need_ppa=`echo $ubuntu_version'<=12.04' | bc -l`
 if [ $need_ppa -eq 1 ]; then
-    sudo add-apt-repository ppa:roblib/ppa
-    sudo apt-get update
-    sudo apt-get install cmake
+    add-apt-repository ppa:roblib/ppa
+    apt-get update
+    apt-get -y install cmake
 fi
 
 ./build.sh "$@"

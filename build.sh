@@ -120,11 +120,11 @@ download \
   "84835b313d4a8b68f5349816d33e07ce" \
   "http://downloads.sourceforge.net/project/lame/lame/3.99"
 
-download \
-  "opus-1.1.2.tar.gz" \
-  "" \
-  "1f08a661bc72930187893a07f3741a91" \
-  "https://github.com/xiph/opus/releases/download/v1.1.2"
+#download \
+#  "opus-1.1.2.tar.gz" \
+#  "" \
+#  "1f08a661bc72930187893a07f3741a91" \
+#  "https://github.com/xiph/opus/releases/download/v1.1.2"
 
 download \
   "v1.6.1.tar.gz" \
@@ -132,11 +132,11 @@ download \
   "b0925c8266e2859311860db5d76d1671" \
   "https://github.com/webmproject/libvpx/archive"
 
-download \
-  "rtmpdump-2.3.tgz" \
-  "" \
-  "eb961f31cd55f0acf5aad1a7b900ef59" \
-  "https://rtmpdump.mplayerhq.hu/download/"
+#download \
+#  "rtmpdump-2.3.tgz" \
+#  "" \
+#  "eb961f31cd55f0acf5aad1a7b900ef59" \
+#  "https://rtmpdump.mplayerhq.hu/download/"
 
 download \
   "soxr-0.1.2-Source.tar.xz" \
@@ -162,11 +162,11 @@ download \
   "40a7bfdcc66280b3c1402a0eb1a27624" \
   "https://github.com/uclouvain/openjpeg/archive/"
 
-download \
-  "n3.2.4.tar.gz" \
-  "ffmpeg3.2.4.tar.gz" \
-  "8ca58121dd042153656d89eba3daa7ab" \
-  "https://github.com/FFmpeg/FFmpeg/archive"
+#download \
+#  "n3.2.4.tar.gz" \
+#  "ffmpeg3.2.4.tar.gz" \
+#  "8ca58121dd042153656d89eba3daa7ab" \
+#  "https://github.com/FFmpeg/FFmpeg/archive"
 
 [ $download_only -eq 1 ] && exit 0
 
@@ -244,12 +244,12 @@ uname -a | grep -q 'aarch64' && lame_build_target="--build=arm-linux" || lame_bu
 make
 make install
 
-echo "*** Building opus ***"
-cd $BUILD_DIR/opus*
-[ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-[ ! -f config.status ] && ./configure --prefix=$TARGET_DIR --disable-shared
-make
-make install
+#echo "*** Building opus ***"
+#cd $BUILD_DIR/opus*
+#[ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
+#[ ! -f config.status ] && ./configure --prefix=$TARGET_DIR --disable-shared
+#make
+#make install
 
 echo "*** Building libvpx ***"
 cd $BUILD_DIR/libvpx*
@@ -258,13 +258,13 @@ cd $BUILD_DIR/libvpx*
 PATH="$BIN_DIR:$PATH" make -j $jval
 make install
 
-echo "*** Building librtmp ***"
-cd $BUILD_DIR/rtmpdump-*
-cd librtmp
-[ $rebuild -eq 1 ] && make distclean || true
-sed -i "s/prefix=.*/prefix=${TARGET_DIR_SED}/" ./Makefile # there's no configure
-make -j $jval
-make install
+#echo "*** Building librtmp ***"
+#cd $BUILD_DIR/rtmpdump-*
+#cd librtmp
+#[ $rebuild -eq 1 ] && make distclean || true
+#sed -i "s/prefix=.*/prefix=${TARGET_DIR_SED}/" ./Makefile # there's no configure
+#make -j $jval
+#make install
 
 echo "*** Building libsoxr ***"
 cd $BUILD_DIR/soxr-*
@@ -323,8 +323,6 @@ PKG_CONFIG_PATH="$TARGET_DIR/lib/pkgconfig" ./configure \
   --enable-libopencore-amrnb \
   --enable-libopencore-amrwb \
   --enable-libopenjpeg \
-  --enable-libopus \
-  --enable-librtmp \
   --enable-libsoxr \
   --enable-libspeex \
   --enable-libtheora \
@@ -338,6 +336,11 @@ PKG_CONFIG_PATH="$TARGET_DIR/lib/pkgconfig" ./configure \
   --enable-libxvid \
   --enable-libzimg \
   --enable-nonfree
+
+
+#  --enable-libopus \
+#  --enable-librtmp \
+
 PATH="$BIN_DIR:$PATH" make -j $jval
 make install
 make distclean
